@@ -30,8 +30,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en-US" className={cn(inter.variable, theme)}>
       <body>
-        {/* <Header /> */}
-        {/* <Analytics /> */}
+        <Header />
+        <Analytics />
         {children}
       </body>
     </html>
