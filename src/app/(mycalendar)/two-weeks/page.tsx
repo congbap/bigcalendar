@@ -1,7 +1,6 @@
 import { addDays } from 'date-fns'
 import { CalendarEvent } from '@/components/big-calendar/types'
 import BigCalendar from '@/components/big-calendar'
-import { Button } from '@/components/ui/button'
 
 const events: CalendarEvent[] = [
   {
@@ -79,9 +78,5 @@ const events: CalendarEvent[] = [
 ]
 
 export default async function Page() {
-  // todo: move client
-  // const headerRight = (<Button onClick={() => console.log(1)}>TwoWeeks</Button>)
-
-  // return <BigCalendar view='month' events={events} calendarHeader={{ headerRight: headerRight}} />
-  return <BigCalendar view='month' events={events} calendarHeader={{ headerRight: (<div>Right</div>)}} />
+  return <BigCalendar view='twoWeeks' events={events} maxVisibleEvents={1} calendarHeader={null} />
 }

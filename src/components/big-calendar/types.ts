@@ -3,7 +3,7 @@ export type EventColor = 'blue' | 'green' | 'red' | 'yellow' | 'purple' | 'orang
 
 // todo: redefine
 // export type CalendarView = "day" | "week" | "month" | "year" | "agenda";
-export type CalendarView = 'month'
+export type CalendarView = 'month' | "twoWeeks"
 
 export type CalendarCell = {
   day: number

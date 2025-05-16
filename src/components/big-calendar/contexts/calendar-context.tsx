@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useMemo, useState } from 'react'
 import { CalendarView, CalendarEvent } from '../types'
-import { isSameDay, parseISO } from 'date-fns'
+import { addDays, isSameDay, parseISO, startOfWeek } from 'date-fns'
 
 type CalendarContextProps = {
   selectedDate: Date
@@ -46,6 +46,13 @@ export function CalendarProvider({ children, initialView, initialEvents, initial
         const monthEnd = new Date(selectedDate.getFullYear(), selectedDate.getMonth() + 1, 0, 23, 59, 59, 999)
         const isInSelectedMonth = eventStartDate <= monthEnd && eventEndDate >= monthStart
         return isInSelectedMonth
+      } else if (view === 'twoWeeks') {
+        const rangeStart = startOfWeek(selectedDate)
+        rangeStart.setHours(0, 0, 0, 0)
+        const rangeEnd = addDays(rangeStart, 14)
+        rangeEnd.setHours(23, 59, 59, 999)
+        const isInSelectedRange = eventStartDate <= rangeEnd && eventEndDate >= rangeStart
+        return isInSelectedRange
       }
     })
   }, [selectedDate, events, view])

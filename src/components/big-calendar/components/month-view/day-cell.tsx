@@ -19,7 +19,6 @@ export function DayCell({ cell, events, eventPositions, maxVisibleEvents }: DayC
   const cellEvents = useMemo(() => getMonthCellEvents(date, events, eventPositions), [date, events, eventPositions])
   const isSunday = date.getDay() === 0
 
-  // const cellHeight = 2 * (maxVisibleEvents ? maxVisibleEvents : cellEvents.length)
   const cellHeight = 2 * Math.min(maxVisibleEvents ? maxVisibleEvents : cellEvents.length, cellEvents.length)
 
   // todo: resize
@@ -35,7 +34,10 @@ export function DayCell({ cell, events, eventPositions, maxVisibleEvents }: DayC
         {day}
       </span>
 
-      <div className={cn(`flex h-6 gap-1 px-2 md:h-[${cellHeight}rem] md:flex-col md:gap-2 md:px-0`, !currentMonth && 'opacity-50')}>
+      {/* <div className={cn(`flex h-6 gap-1 px-2 md:h-[${cellHeight}rem] md:flex-col md:gap-2 md:px-0`, !currentMonth && 'opacity-50')}> */}
+      <div className={cn(`flex min-h-6 gap-1 px-2 md:h-[${cellHeight}rem] md:flex-col md:gap-2 md:px-0`, !currentMonth && 'opacity-50')}>
+      {/* <div className={cn(`flex min-h-[2rem] gap-1 px-2 md:h-[${cellHeight}rem] md:flex-col md:gap-2 md:px-0`, !currentMonth && 'opacity-50')}> */}
+      {/* <div className={cn(`flex h-full min-h-[2rem] gap-1 px-2 md:h-[${cellHeight}rem] md:flex-col md:gap-2 md:px-0`, !currentMonth && 'opacity-50')}> */}
         {cellEvents.slice(0, maxVisibleEvents).map((event) => {
           const position = event.position
           const eventKey = event ? `event-${event.id}-${position}` : `empty-${position}`

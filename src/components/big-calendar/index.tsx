@@ -1,5 +1,8 @@
-import { CalendarHeader } from './components/header/calendar-header'
+'use client'
+
+import { CalendarHeader, CalendarHeaderProps } from './components/header/calendar-header'
 import { CalendarMonthView } from './components/month-view/calendar-month-view'
+import { CalendarTwoWeeksView } from './components/two-weeks-view/calendar-weeks-view'
 import { CalendarProvider } from './contexts/calendar-context'
 import { CalendarEvent, CalendarView } from './types'
 
@@ -7,21 +10,24 @@ type BigCalendarProps = {
   view?: CalendarView
   events?: CalendarEvent[]
   maxVisibleEvents?: number
+  calendarHeader?: CalendarHeaderProps | null
 }
 
-export default function BigCalendar({ view, events, maxVisibleEvents }: BigCalendarProps) {
+// todo: refine
+export default function BigCalendar({ view, events, maxVisibleEvents, calendarHeader }: BigCalendarProps) {
   view ??= 'month'
   events ??= []
-  maxVisibleEvents ??= 3
 
   return (
     <CalendarProvider initialView={view} initialEvents={events} initialMaxVisibleEvents={maxVisibleEvents}>
       <div className='mx-auto flex max-w-screen-2xl flex-col gap-4 px-8 py-4'>
         <div className='overflow-hidden rounded-xl border'>
-          <CalendarHeader />
+          {calendarHeader !== null && <CalendarHeader {...calendarHeader} />}
           {
             {
               month: <CalendarMonthView />,
+              // todo: twoWeeks
+              twoWeeks: <CalendarTwoWeeksView />,
             }[view]
           }
         </div>

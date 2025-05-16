@@ -30,10 +30,20 @@ import { CalendarCell, CalendarEvent, CalendarView } from './types'
 // ================ Header helper functions ================ //
 
 // todo: extend
+// twoWeeks, MMM, yyyy or MMM - MMM, yyyy
 export function rangeText(view: CalendarView, date: Date) {
   switch (view) {
     case 'month':
       return `${format(date, 'MMM, yyyy')}`
+    case 'twoWeeks':
+      const start = startOfWeek(date)
+      const end = addDays(start, 14)
+
+      if (isSameMonth(start, end)) {
+        return `${format(date, 'MMM, yyyy')}`
+      }
+
+      return `${format(start, 'MMM, yyyy')} - ${format(end, 'MMM, yyyy')}`
     default:
       return 'Error while formatting '
   }
@@ -43,6 +53,7 @@ export function rangeText(view: CalendarView, date: Date) {
 export function navigateDate(date: Date, view: CalendarView, direction: 'previous' | 'next'): Date {
   const operations = {
     month: direction === 'next' ? addMonths.bind(null, date, 1) : subMonths.bind(null, date, 1),
+    twoWeeks: direction === 'next' ? addWeeks.bind(null, date, 2) : subWeeks.bind(null, date, 2),
   }
 
   return operations[view]()
@@ -54,6 +65,25 @@ export function navigateDate(date: Date, view: CalendarView, direction: 'previou
 
 //   return operations[view](date, 1)
 // }
+
+// ================ TwoWeeks view helper functions ================ //
+
+export function getTwoWeeksCells(selectedDate: Date): CalendarCell[] {
+  const currentYear = selectedDate.getFullYear()
+  const currentMonth = selectedDate.getMonth()
+
+  const startDate = startOfWeek(selectedDate)
+
+  return Array.from({ length: 14 }, (_, i) => {
+    const date = addDays(startDate, i)
+
+    return {
+      day: date.getDate(),
+      currentMonth: date.getMonth() === currentMonth,
+      date: date,
+    }
+  })
+}
 
 // ================ Month view helper functions ================ //
 
