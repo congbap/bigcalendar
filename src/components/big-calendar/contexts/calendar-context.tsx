@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, useContext, useMemo, useState } from 'react'
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { CalendarView, CalendarEvent } from '../types'
 import { addDays, isSameDay, parseISO, startOfWeek } from 'date-fns'
 
@@ -34,6 +34,16 @@ export function CalendarProvider({ children, initialView, initialEvents, initial
   const [view, setView] = useState(initialView)
   const [events, setEvents] = useState(initialEvents)
   const [maxVisibleEvents] = useState(initialMaxVisibleEvents)
+
+  // todo: ... 내일 검토하자
+  useEffect(() => {
+    setEvents(initialEvents)
+  }, [initialEvents])
+  // const resetEvents = useCallback(() => {
+  //   setEvents(initialEvents)
+  // }, [initialEvents])
+  // // resetEvents()
+  // setTimeout(resetEvents, 0)
 
   // todo: extend
   const filteredEvents = useMemo(() => {

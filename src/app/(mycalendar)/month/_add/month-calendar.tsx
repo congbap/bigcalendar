@@ -13,7 +13,6 @@ const events: CalendarEvent[] = [
     startDate: new Date().toISOString(),
     endDate: addDays(new Date(), 2).toISOString(),
     title: '데브인데브인데브인데브인데브인데브인데브인',
-
     color: 'blue',
   },
   {
@@ -21,7 +20,6 @@ const events: CalendarEvent[] = [
     startDate: new Date().toISOString(),
     endDate: new Date().toISOString(),
     title: '홍길동',
-
     color: 'green',
   },
   {
@@ -29,7 +27,6 @@ const events: CalendarEvent[] = [
     startDate: new Date().toISOString(),
     endDate: new Date().toISOString(),
     title: '김길동',
-
     color: 'yellow',
   },
   {
@@ -37,7 +34,6 @@ const events: CalendarEvent[] = [
     startDate: new Date().toISOString(),
     endDate: new Date().toISOString(),
     title: '이길동',
-
     color: 'purple',
   },
   {
@@ -45,7 +41,6 @@ const events: CalendarEvent[] = [
     startDate: new Date().toISOString(),
     endDate: new Date().toISOString(),
     title: '박길동',
-
     color: 'orange',
   },
   {
@@ -53,7 +48,6 @@ const events: CalendarEvent[] = [
     startDate: addDays(new Date(), -1).toISOString(),
     endDate: addDays(new Date(), -1).toISOString(),
     title: '최길동최길동최길동최길동',
-
     color: 'gray',
   },
   {
@@ -61,7 +55,6 @@ const events: CalendarEvent[] = [
     startDate: addDays(new Date(), 7).toISOString(),
     endDate: addDays(new Date(), 7).toISOString(),
     title: '김씨네',
-
     color: 'yellow',
   },
   {
@@ -69,7 +62,6 @@ const events: CalendarEvent[] = [
     startDate: addDays(new Date(), 7).toISOString(),
     endDate: addDays(new Date(), 7).toISOString(),
     title: '이씨네',
-
     color: 'purple',
   },
   {
@@ -77,8 +69,14 @@ const events: CalendarEvent[] = [
     startDate: addDays(new Date(), -14).toISOString(),
     endDate: addDays(new Date(), -14).toISOString(),
     title: '원가네',
-
     color: 'red',
+  },
+  {
+    id: '0kp74e5w9jcev',
+    startDate: new Date(2025, 4, 3).toISOString(),
+    endDate: new Date(2025, 4, 9).toISOString(),
+    title: '가나다라마바사아자차카타파하0123456789',
+    color: 'stone',
   },
 ]
 

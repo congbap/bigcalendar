@@ -10,9 +10,6 @@ type BigCalendarProps = {
   view?: CalendarView
   events?: CalendarEvent[]
   maxVisibleEvents?: number
-  // calendarHeader?: CalendarHeaderProps | null
-  // hideCalendarHeader?: boolean
-  // calendarHeader?: CalendarHeaderProps
   hasCalendarHeader?: boolean
   calendarHeader?: CalendarHeaderProps
 }
@@ -23,13 +20,10 @@ export default function BigCalendar({ view = 'month', events = [], maxVisibleEve
     <CalendarProvider initialView={view} initialEvents={events} initialMaxVisibleEvents={maxVisibleEvents}>
       <div className='mx-auto flex max-w-screen-2xl flex-col gap-4 px-8 py-4'>
         <div className='overflow-hidden rounded-xl border'>
-          {/* {calendarHeader !== null && <CalendarHeader {...calendarHeader} />} */}
-          {/* {!hideCalendarHeader && <CalendarHeader {...calendarHeader} />} */}
           {hasCalendarHeader && <CalendarHeader {...calendarHeader} />}
           {
             {
               month: <CalendarMonthView />,
-              // todo: twoWeeks
               twoWeeks: <CalendarTwoWeeksView />,
             }[view]
           }
