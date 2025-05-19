@@ -77,8 +77,19 @@ const events: CalendarEvent[] = [
 
     color: 'red',
   },
+  {
+    id: '0kp74e5w8jcev',
+
+    startDate: new Date(2025, 4, 23).toISOString(),
+    endDate: new Date(2025, 4, 26).toISOString(),
+    // title: '가나다라마바사아자차카타파하0123456789',
+    title: 'E2402-001+2/K뷰티 컴퍼니/김시험,이시험/V2',
+
+    color: 'red',
+  },
 ]
 
 export default function TwoWeeksCalendar() {
-  return <BigCalendar view='twoWeeks' events={events} maxVisibleEvents={1} calendarHeader={null} />
+  // return <BigCalendar view='twoWeeks' events={events} maxVisibleEvents={1} calendarHeader={null} />
+  return <BigCalendar view='twoWeeks' events={events} maxVisibleEvents={1} hasCalendarHeader={false} />
 }

@@ -76,7 +76,7 @@ export function MonthEventBadge({ event, cellDate, eventCurrentDay, eventTotalDa
   const eventBadgeClasses = cn(eventBadgeVariants({ color, multiDayPosition: position, className }))
 
   return (
-    <div className={eventBadgeClasses}>
+    <div className={eventBadgeClasses} title={event.title}>
       <div className='flex items-center gap-1.5 truncate'>
         {renderBadgeText && (
           <p className='flex-1 truncate font-semibold'>
