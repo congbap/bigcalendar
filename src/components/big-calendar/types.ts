@@ -1,9 +1,9 @@
 // todo: recolor
-export type EventColor = 'blue' | 'green' | 'red' | 'yellow' | 'purple' | 'orange' | 'gray'
+// export type EventColor = 'blue' | 'green' | 'red' | 'yellow' | 'purple' | 'orange' | 'gray'
 
 // todo: redefine
 // export type CalendarView = "day" | "week" | "month" | "year" | "agenda";
-export type CalendarView = 'month' | "twoWeeks"
+export type CalendarView = 'month' | 'twoWeeks'
 
 export type CalendarCell = {
   day: number
@@ -16,8 +16,5 @@ export type CalendarEvent = {
   startDate: string
   endDate: string
   title: string
-  // todo: recustom
-  // title: React.ReactNode
-
-  color: EventColor
+  color: string
 }

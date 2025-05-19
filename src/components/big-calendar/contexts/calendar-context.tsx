@@ -45,6 +45,7 @@ export function CalendarProvider({ children, initialView, initialEvents, initial
         const monthStart = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), 1)
         const monthEnd = new Date(selectedDate.getFullYear(), selectedDate.getMonth() + 1, 0, 23, 59, 59, 999)
         const isInSelectedMonth = eventStartDate <= monthEnd && eventEndDate >= monthStart
+
         return isInSelectedMonth
       } else if (view === 'twoWeeks') {
         const rangeStart = startOfWeek(selectedDate)
@@ -52,6 +53,7 @@ export function CalendarProvider({ children, initialView, initialEvents, initial
         const rangeEnd = addDays(rangeStart, 14)
         rangeEnd.setHours(23, 59, 59, 999)
         const isInSelectedRange = eventStartDate <= rangeEnd && eventEndDate >= rangeStart
+
         return isInSelectedRange
       }
     })
