@@ -32,12 +32,20 @@ export function CalendarProvider({ children, initialView, initialEvents, initial
   const [selectedDate, setSelectedDate] = useState(new Date())
 
   // todo:
-  // const [view, setView] = useState(initialView)
+  const [view, setView] = useState(initialView)
   // const [events, setEvents] = useState(initialEvents)
-  // const [maxVisibleEvents] = useState(initialMaxVisibleEvents)
-  const [view, setView] = useReinitState(initialView)
   const [events, setEvents] = useReinitState(initialEvents)
-  const [maxVisibleEvents] = useReinitState(initialMaxVisibleEvents)
+  const [maxVisibleEvents] = useState(initialMaxVisibleEvents)
+
+  // todo: ... 내일 검토하자
+  // useEffect(() => {
+  //   setEvents(initialEvents)
+  // }, [initialEvents])
+  // const resetEvents = useCallback(() => {
+  //   setEvents(initialEvents)
+  // }, [initialEvents])
+  // // resetEvents()
+  // setTimeout(resetEvents, 0)
 
   // todo: extend
   const filteredEvents = useMemo(() => {

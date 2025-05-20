@@ -95,13 +95,13 @@ import { useEffect, useState } from 'react'
 
 const getEvents = () => {
   return [
-    {
-      id: '0kp74e5w6jcdt',
-      startDate: new Date().toISOString(),
-      endDate: addDays(new Date(), 2).toISOString(),
-      title: '데브인데브인데브인데브인데브인데브인데브인',
-      color: 'red',
-    },
+    // {
+    //   id: '0kp74e5w6jcdt',
+    //   startDate: new Date().toISOString(),
+    //   endDate: addDays(new Date(), 2).toISOString(),
+    //   title: '데브인데브인데브인데브인데브인데브인데브인',
+    //   color: 'red',
+    // },
     // {
     //   id: '0kp74e5w6jcdu',
     //   startDate: new Date().toISOString(),
@@ -174,15 +174,22 @@ const getEvents = () => {
     //   // color: '#2b7fff',
     //   color: 'blue',
     // },
-    // {
-    //   id: '0kp74e5w8jcev',
-    //   startDate: new Date(2025, 4, 30).toISOString(),
-    //   endDate: new Date(2025, 5, 2).toISOString(),
-    //   // title: '가나다라마바사아자차카타파하0123456789',
-    //   title: 'E2405-001+2/더케이컴퍼니/박시험/V1',
-    //   // color: 'blue',
-    //   color: eventColors[Math.floor(Math.random() * eventColors.length)],
-    // },
+    {
+      id: '0kp74e5w8jcev',
+      startDate: new Date(2025, 4, 30).toISOString(),
+      endDate: new Date(2025, 5, 2).toISOString(),
+      // title: '가나다라마바사아자차카타파하0123456789',
+      title: 'E2405-001+2/더케이컴퍼니/박시험/V1',
+      // color: 'blue',
+      color: eventColors[Math.floor(Math.random() * eventColors.length)],
+    },
+    {
+      id: '0kp74e5w8jcev',
+      startDate: new Date(2025, 4, 20).toISOString(),
+      endDate: new Date(2025, 4, 20).toISOString(),
+      title: '가나다라마바사아자차카타파하0123456789',
+      color: eventColors[Math.floor(Math.random() * eventColors.length)],
+    },
   ] as CalendarEvent[]
 }
 
