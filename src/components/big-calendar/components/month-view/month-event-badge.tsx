@@ -98,7 +98,8 @@ export const eventBadgeColorVariants = cva('', {
 })
 
 const eventBadgeVariants = cva(
-  'mx-1 flex size-auto h-6.5 select-none items-center justify-between gap-1.5 truncate whitespace-nowrap rounded-md border px-2 text-xs focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring',
+  // 'mx-1 flex size-auto h-6.5 select-none items-center justify-between gap-1.5 truncate whitespace-nowrap rounded-md border px-2 text-xs focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring',
+  'mx-1 flex size-auto h-[1.625rem] select-none items-center justify-between gap-1.5 truncate whitespace-nowrap rounded-md border px-2 text-xs focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring',
   {
     variants: {
       multiDayPosition: {
@@ -157,11 +158,6 @@ export function MonthEventBadge({
 
   const renderBadgeText = ['first', 'none'].includes(position)
 
-  // const color = event.color as VariantProps<typeof eventBadgeVariants>['color']
-
-  // const eventBadgeClasses = cn(
-  //   eventBadgeVariants({ color, multiDayPosition: position, className }),
-  // )
   const color = event.color as VariantProps<
     typeof eventBadgeColorVariants
   >['color']
