@@ -1,23 +1,20 @@
-import { ChevronLeft, ChevronRight } from 'lucide-react'
-
-import { Button } from '@/components/ui/button'
-
-import { useCalendar } from '../../contexts/calendar-context'
+import { CalendarEvent, CalendarView } from '../../types'
 import { navigateDate, rangeText } from '../../helpers'
-import { CalendarView } from '../../types'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { useCalendar } from '../../contexts/calendar-context'
 
 type DateNavigatorProps = {
   view: CalendarView
+  events: CalendarEvent[]
 }
 
-export function DateNavigator({ view }: DateNavigatorProps) {
+export function DateNavigator({ view, events }: DateNavigatorProps) {
   const { selectedDate, setSelectedDate } = useCalendar()
 
-  const handlePrevious = () =>
-    setSelectedDate(navigateDate(selectedDate, view, 'previous'))
+  const handlePrevious = () => setSelectedDate(navigateDate(selectedDate, view, 'previous'))
 
-  const handleNext = () =>
-    setSelectedDate(navigateDate(selectedDate, view, 'next'))
+  const handleNext = () => setSelectedDate(navigateDate(selectedDate, view, 'next'))
 
   return (
     <div>

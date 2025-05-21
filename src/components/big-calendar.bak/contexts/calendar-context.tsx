@@ -1,13 +1,13 @@
 'use client'
 
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import { CalendarView, CalendarEvent } from '../types'
 import { addDays, isSameDay, parseISO, startOfWeek } from 'date-fns'
-import { createContext, useContext, useMemo, useState } from 'react'
-
 import { useReinitState } from '../hooks/use-reinit-state'
-import { CalendarEvent, CalendarView } from '../types'
 
 type CalendarContextProps = {
   selectedDate: Date
+  // setSelectedDate: (date: Date | undefined) => void
   setSelectedDate: (date: Date) => void
   view: CalendarView
   setView: (view: CalendarView) => void
@@ -16,8 +16,7 @@ type CalendarContextProps = {
   filteredEvents: CalendarEvent[]
   singleDayEvents: CalendarEvent[]
   multiDayEvents: CalendarEvent[]
-  visibleEventCount: number
-  setVisibleEventCount: (visibleEventCount: number) => void
+  maxVisibleEvents?: number
 }
 
 const CalendarContext = createContext({} as CalendarContextProps)
@@ -26,22 +25,19 @@ type CalendarProviderProps = {
   children: React.ReactNode
   initialView: CalendarView
   initialEvents: CalendarEvent[]
-  initialVisibleEventCount: number
+  initialMaxVisibleEvents?: number
 }
 
-export function CalendarProvider({
-  children,
-  initialView,
-  initialEvents,
-  initialVisibleEventCount,
-}: CalendarProviderProps) {
+export function CalendarProvider({ children, initialView, initialEvents, initialMaxVisibleEvents }: CalendarProviderProps) {
   const [selectedDate, setSelectedDate] = useState(new Date())
 
+  // todo:
+  // const [view, setView] = useState(initialView)
+  // const [events, setEvents] = useState(initialEvents)
+  // const [maxVisibleEvents] = useState(initialMaxVisibleEvents)
   const [view, setView] = useReinitState(initialView)
   const [events, setEvents] = useReinitState(initialEvents)
-  const [visibleEventCount, setVisibleEventCount] = useReinitState(
-    initialVisibleEventCount,
-  )
+  const [maxVisibleEvents] = useReinitState(initialMaxVisibleEvents)
 
   // todo: extend
   const filteredEvents = useMemo(() => {
@@ -50,22 +46,9 @@ export function CalendarProvider({
       const eventEndDate = parseISO(event.endDate)
 
       if (view === 'month') {
-        const monthStart = new Date(
-          selectedDate.getFullYear(),
-          selectedDate.getMonth(),
-          1,
-        )
-        const monthEnd = new Date(
-          selectedDate.getFullYear(),
-          selectedDate.getMonth() + 1,
-          0,
-          23,
-          59,
-          59,
-          999,
-        )
-        const isInSelectedMonth =
-          eventStartDate <= monthEnd && eventEndDate >= monthStart
+        const monthStart = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), 1)
+        const monthEnd = new Date(selectedDate.getFullYear(), selectedDate.getMonth() + 1, 0, 23, 59, 59, 999)
+        const isInSelectedMonth = eventStartDate <= monthEnd && eventEndDate >= monthStart
 
         return isInSelectedMonth
       } else if (view === 'twoWeeks') {
@@ -73,8 +56,7 @@ export function CalendarProvider({
         rangeStart.setHours(0, 0, 0, 0)
         const rangeEnd = addDays(rangeStart, 14)
         rangeEnd.setHours(23, 59, 59, 999)
-        const isInSelectedRange =
-          eventStartDate <= rangeEnd && eventEndDate >= rangeStart
+        const isInSelectedRange = eventStartDate <= rangeEnd && eventEndDate >= rangeStart
 
         return isInSelectedRange
       }
@@ -93,10 +75,16 @@ export function CalendarProvider({
     return !isSameDay(startDate, endDate)
   })
 
+  // const handleSelectDate = (date: Date | undefined) => {
+  //   if (!date) return
+  //   setSelectedDate(date)
+  // }
+
   return (
     <CalendarContext.Provider
       value={{
         selectedDate,
+        // setSelectedDate: handleSelectDate,
         setSelectedDate,
         view,
         setView,
@@ -105,8 +93,7 @@ export function CalendarProvider({
         filteredEvents,
         singleDayEvents,
         multiDayEvents,
-        visibleEventCount,
-        setVisibleEventCount,
+        maxVisibleEvents,
       }}
     >
       {children}
@@ -116,7 +103,6 @@ export function CalendarProvider({
 
 export function useCalendar(): CalendarContextProps {
   const context = useContext(CalendarContext)
-  if (!context)
-    throw new Error('useCalendar must be used within a CalendarProvider.')
+  if (!context) throw new Error('useCalendar must be used within a CalendarProvider.')
   return context
 }

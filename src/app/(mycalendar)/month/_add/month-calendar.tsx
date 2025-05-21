@@ -1,7 +1,7 @@
 'use client'
 
-import { addDays } from 'date-fns'
-import { CalendarEvent } from '@/components/big-calendar/types'
+import { addDays, format, startOfMonth, startOfWeek } from 'date-fns'
+import { CalendarEvent, CalendarView, eventColors } from '@/components/big-calendar/types'
 import BigCalendar from '@/components/big-calendar'
 import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'
@@ -73,12 +73,47 @@ const events: CalendarEvent[] = [
   },
   {
     id: '0kp74e5w9jcev',
-    startDate: new Date(2025, 4, 3).toISOString(),
+    // startDate: new Date(2025, 4, 3).toISOString(),
+    startDate: new Date(2025, 3, 30).toISOString(),
     endDate: new Date(2025, 4, 9).toISOString(),
     title: '가나다라마바사아자차카타파하0123456789',
-    color: 'stone',
+    color: 'red',
   },
 ]
+
+export const getData = (view: CalendarView = 'month', count: number = 10) => {
+  const now = new Date()
+  const start = {
+    // month: startOfMonth(now),
+    month: startOfWeek(startOfMonth(now)),
+    twoWeeks: startOfWeek(now),
+  }[view]
+  const range = {
+    month: 35,
+    twoWeeks: 14,
+  }[view]
+
+  const events: CalendarEvent[] = []
+
+  for (let i = 0; i < count; i++) {
+    const startAdd = Math.floor(Math.random() * range)
+    const endAdd = Math.floor(Math.random() * (range - startAdd))
+    const startDate = addDays(start, startAdd)
+    const endDate = addDays(startDate, endAdd)
+
+    events.push({
+      id: i.toString(),
+      startDate: startDate.toISOString(),
+      endDate: endDate.toISOString(),
+      title: `E${format(now, 'yyMM')}-${Math.floor(Math.random() * (9 - 1) + 1)
+        .toString()
+        .padStart(3, '0')}${Math.floor(Math.random() * 2) > 0 ? '+1' : ''}/`,
+      color: eventColors[Math.floor(Math.random() * eventColors.length)],
+    })
+  }
+
+  return events
+}
 
 export default function MonthCalendar() {
   const router = useRouter()
@@ -93,5 +128,6 @@ export default function MonthCalendar() {
     </Button>
   )
 
-  return <BigCalendar view='month' events={events} calendarHeader={{ headerRight: headerRight }} />
+  // return <BigCalendar view='month' events={events} calendarHeader={{ headerRight: headerRight }} />
+  return <BigCalendar view='month' events={getData()} calendarHeader={{ headerRight: headerRight }} />
 }

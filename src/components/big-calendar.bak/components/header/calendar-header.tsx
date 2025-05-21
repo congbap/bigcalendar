@@ -9,14 +9,11 @@ export type CalendarHeaderProps = {
   headerRight?: React.ReactNode
 }
 
-export function CalendarHeader({
-  headerLeft,
-  headerCenter,
-  headerRight,
-}: CalendarHeaderProps) {
-  const { view } = useCalendar()
+// todo: refine
+export function CalendarHeader({ headerLeft, headerCenter, headerRight }: CalendarHeaderProps) {
+  const { view, events } = useCalendar()
 
-  headerCenter ??= <DateNavigator view={view} />
+  headerCenter ??= <DateNavigator view={view} events={events} />
 
   return (
     <div className='border-b p-4'>

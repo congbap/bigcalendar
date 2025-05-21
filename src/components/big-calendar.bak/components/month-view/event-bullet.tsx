@@ -1,10 +1,8 @@
 import { cva } from 'class-variance-authority'
 
 import { cn } from '@/lib/utils'
-
 import { EventColor } from '../../types'
 
-// todo: extend
 const eventBulletVariants = cva('size-2 rounded-full', {
   variants: {
     color: {
@@ -37,12 +35,6 @@ const eventBulletVariants = cva('size-2 rounded-full', {
   },
 })
 
-export function EventBullet({
-  color,
-  className,
-}: {
-  color: EventColor
-  className: string
-}) {
+export function EventBullet({ color, className }: { color: EventColor; className: string }) {
   return <div className={cn(eventBulletVariants({ color, className }))} />
 }
