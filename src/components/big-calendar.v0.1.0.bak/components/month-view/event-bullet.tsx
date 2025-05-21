@@ -33,7 +33,7 @@ const eventBulletVariants = cva('size-2 rounded-full', {
     },
   },
   defaultVariants: {
-    color: 'blue',
+    color: 'gray',
   },
 })
 

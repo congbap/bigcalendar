@@ -7,6 +7,7 @@ import {
   endOfMonth,
   format,
   isSameDay,
+  isSameMonth,
   parseISO,
   startOfDay,
   startOfMonth,
@@ -20,12 +21,22 @@ import { CalendarCell, CalendarEvent, CalendarView } from './types'
 // ================ Header helper functions ================ //
 
 // todo: extend
+// twoWeeks, MMM, yyyy or MMM - MMM, yyyy
 export function rangeText(view: CalendarView, date: Date) {
   switch (view) {
     case 'month':
       return `${format(date, 'MMM, yyyy')}`
+
     case 'twoWeeks':
-      return `${format(date, 'MMM, yyyy')}`
+      const start = startOfWeek(date)
+      const end = addDays(start, 14)
+
+      if (isSameMonth(start, end)) {
+        return `${format(date, 'MMM, yyyy')}`
+      }
+
+      return `${format(start, 'MMM, yyyy')} - ${format(end, 'MMM, yyyy')}`
+
     default:
       return 'Error while formatting '
   }

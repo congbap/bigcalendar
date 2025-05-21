@@ -1,13 +1,11 @@
-'use client'
-
 import { useMemo } from 'react'
 
 import { weekDays } from '../../constants'
 import { useCalendar } from '../../contexts/calendar-context'
-import { calculateMonthEventPositions, getCalendarCells } from '../../helpers'
-import { DayCell } from './day-cell'
+import { calculateMonthEventPositions, getTwoWeeksCells } from '../../helpers'
+import { DayCell } from '../month-view/day-cell'
 
-export function CalendarMonthView() {
+export function CalendarTwoWeeksView() {
   const {
     selectedDate,
     events,
@@ -16,7 +14,7 @@ export function CalendarMonthView() {
     visibleEventCount,
   } = useCalendar()
 
-  const cells = useMemo(() => getCalendarCells(selectedDate), [selectedDate])
+  const cells = useMemo(() => getTwoWeeksCells(selectedDate), [selectedDate])
 
   const eventPositions = useMemo(
     () =>
@@ -26,7 +24,7 @@ export function CalendarMonthView() {
         selectedDate,
         visibleEventCount,
       ),
-    [multiDayEvents, singleDayEvents, selectedDate, visibleEventCount],
+    [multiDayEvents, singleDayEvents, selectedDate],
   )
 
   return (

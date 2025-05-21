@@ -1,16 +1,15 @@
-import { format } from 'date-fns'
-import { ReactNode } from 'react'
-
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
+  DialogTrigger,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
+  DialogDescription,
 } from '@/components/ui/dialog'
 import { cn } from '@/lib/utils'
 
+import { ReactNode } from 'react'
+import { format } from 'date-fns'
 import { CalendarEvent } from '../../types'
 import { EventBullet } from '../month-view/event-bullet'
 import { eventBadgeColorVariants } from '../month-view/month-event-badge'

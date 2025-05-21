@@ -24,7 +24,7 @@ export function CalendarTwoWeeksView() {
         selectedDate,
         visibleEventCount,
       ),
-    [multiDayEvents, singleDayEvents, selectedDate],
+    [multiDayEvents, singleDayEvents, selectedDate, visibleEventCount],
   )
 
   return (

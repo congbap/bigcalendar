@@ -11,31 +11,25 @@ import { CalendarProvider } from './contexts/calendar-context'
 import { CalendarEvent, CalendarView } from './types'
 
 type BigCalendarProps = {
-  selectedDate: Date
-  view: CalendarView
-  events: CalendarEvent[]
+  view?: CalendarView
+  events?: CalendarEvent[]
   visibleEventCount?: number
   hasCalendarHeader?: boolean
   calendarHeader?: CalendarHeaderProps
-  onNavigate?: (date: Date, view: CalendarView) => Promise<void>
 }
 
 export default function BigCalendar({
-  selectedDate,
-  view,
-  events,
+  view = 'month',
+  events = [],
   visibleEventCount = maxVisibleEvent,
   hasCalendarHeader = true,
   calendarHeader,
-  onNavigate,
 }: BigCalendarProps) {
   return (
     <CalendarProvider
-      initialSelectedDate={selectedDate}
       initialView={view}
       initialEvents={events}
       initialVisibleEventCount={visibleEventCount}
-      onNavigate={onNavigate}
     >
       <div className='mx-auto flex max-w-screen-2xl flex-col gap-4 px-8 py-4'>
         <div className='overflow-hidden rounded-xl border'>

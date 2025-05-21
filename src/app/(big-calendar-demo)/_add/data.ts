@@ -29,8 +29,10 @@ const tsid = () => {
 export const getData = async (
   view: CalendarView = 'month',
   count: number = 8,
+  date: Date = new Date(),
 ) => {
-  const now = new Date()
+  // const now = new Date()
+  const now = date
   const start = {
     // month: startOfMonth(now),
     month: startOfWeek(startOfMonth(now)),

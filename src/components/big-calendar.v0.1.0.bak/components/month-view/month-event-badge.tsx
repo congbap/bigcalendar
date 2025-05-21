@@ -93,7 +93,7 @@ export const eventBadgeColorVariants = cva('', {
     },
   },
   defaultVariants: {
-    color: 'blue',
+    color: 'gray',
   },
 })
 

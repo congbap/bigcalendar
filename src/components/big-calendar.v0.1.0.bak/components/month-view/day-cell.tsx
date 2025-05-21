@@ -1,5 +1,5 @@
 import { isToday, startOfDay } from 'date-fns'
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 
 import { cn } from '@/lib/utils'
 
@@ -103,6 +103,18 @@ export function DayCell({
             </span>
           </EventListDialog>
         )}
+
+        {/* {unpositionCount > 0 && (
+          <p
+            className={cn(
+              'h-4.5 px-1.5 text-xs font-semibold text-muted-foreground',
+              !currentMonth && 'opacity-50',
+            )}
+          >
+            <span className='md:hidden'>+{unpositionCount}</span>
+            <span className='hidden md:inline'>+{unpositionCount} more</span>
+          </p>
+        )} */}
       </div>
     </div>
   )

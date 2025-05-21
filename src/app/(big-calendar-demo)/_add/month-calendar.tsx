@@ -1,23 +1,26 @@
 import { Menu } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 import BigCalendar from '@/components/big-calendar'
-import { CalendarEvent } from '@/components/big-calendar/types'
+import { CalendarEvent, CalendarView } from '@/components/big-calendar/types'
 import { Button } from '@/components/ui/button'
 
 import { getData } from './data'
 
 export default function MonthCalendar() {
-  const [data, setData] = useState<CalendarEvent[]>()
+  const [selectedDate, setSelectedDate] = useState(new Date())
+  const [view] = useState<CalendarView>('month')
+  const [events, setEvents] = useState<CalendarEvent[]>([])
+
+  const onNavigate = useCallback(async (date: Date, view: CalendarView) => {
+    const data = await getData(view, 10, date)
+    setSelectedDate(date)
+    setEvents(data)
+  }, [])
 
   useEffect(() => {
-    const fetchData = async () => {
-      const data = await getData()
-      setData(data)
-    }
-
-    fetchData()
-  }, [])
+    onNavigate(selectedDate, view)
+  }, [onNavigate, selectedDate, view])
 
   const headerRight = (
     <Button variant={'ghost'} onClick={() => {}}>
@@ -27,10 +30,12 @@ export default function MonthCalendar() {
 
   return (
     <BigCalendar
-      view='month'
-      events={data}
+      selectedDate={selectedDate}
+      view={view}
+      events={events}
       calendarHeader={{ headerRight: headerRight }}
       visibleEventCount={3}
+      onNavigate={onNavigate}
     />
   )
 }

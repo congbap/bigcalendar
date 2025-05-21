@@ -1,15 +1,14 @@
 'use client'
 
 import { addDays, isSameDay, parseISO, startOfWeek } from 'date-fns'
-import { createContext, useContext, useMemo } from 'react'
+import { createContext, useContext, useMemo, useState } from 'react'
 
 import { useReinitState } from '../hooks/use-reinit-state'
 import { CalendarEvent, CalendarView } from '../types'
 
 type CalendarContextProps = {
   selectedDate: Date
-  // setSelectedDate: (date: Date) => void
-  setSelectedDate: (date: Date) => Promise<void>
+  setSelectedDate: (date: Date) => void
   view: CalendarView
   setView: (view: CalendarView) => void
   events: CalendarEvent[]
@@ -19,38 +18,24 @@ type CalendarContextProps = {
   multiDayEvents: CalendarEvent[]
   visibleEventCount: number
   setVisibleEventCount: (visibleEventCount: number) => void
-  onNavigate?: (date: Date, view: CalendarView) => Promise<void>
 }
 
 const CalendarContext = createContext({} as CalendarContextProps)
 
-export type CalendarProviderProps = {
-  children?: React.ReactNode
-  initialSelectedDate: Date
+type CalendarProviderProps = {
+  children: React.ReactNode
   initialView: CalendarView
   initialEvents: CalendarEvent[]
   initialVisibleEventCount: number
-  // onNavigate?: (date: Date) => void
-  // onNavigate?: ({ date, view }: { date: Date; view: CalendarView }) => void
-  // onNavigate?: (date: Date, view: CalendarView) => void
-  onNavigate?: (date: Date, view: CalendarView) => Promise<void>
 }
 
 export function CalendarProvider({
   children,
-  initialSelectedDate,
   initialView,
   initialEvents,
   initialVisibleEventCount,
-  onNavigate,
 }: CalendarProviderProps) {
-  // const [selectedDate, setSelectedDate] = useState(new Date())
-  const [selectedDate, setSelectedDate] = useReinitState(initialSelectedDate)
-
-  const handleSelectedDate = async (date: Date) => {
-    setSelectedDate(date)
-    await onNavigate?.call(null, date, view)
-  }
+  const [selectedDate, setSelectedDate] = useState(new Date())
 
   const [view, setView] = useReinitState(initialView)
   const [events, setEvents] = useReinitState(initialEvents)
@@ -112,8 +97,7 @@ export function CalendarProvider({
     <CalendarContext.Provider
       value={{
         selectedDate,
-        // setSelectedDate,
-        setSelectedDate: handleSelectedDate,
+        setSelectedDate,
         view,
         setView,
         events,
@@ -123,7 +107,6 @@ export function CalendarProvider({
         multiDayEvents,
         visibleEventCount,
         setVisibleEventCount,
-        onNavigate,
       }}
     >
       {children}

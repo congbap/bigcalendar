@@ -1,29 +1,33 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 import BigCalendar from '@/components/big-calendar'
-import { CalendarEvent } from '@/components/big-calendar/types'
+import { CalendarEvent, CalendarView } from '@/components/big-calendar/types'
 
 import { getData } from './data'
 
 export default function TwoWeeksCalendar() {
-  const [data, setData] = useState<CalendarEvent[]>()
+  const [selectedDate, setSelectedDate] = useState(new Date())
+  const [view] = useState<CalendarView>('twoWeeks')
+  const [events, setEvents] = useState<CalendarEvent[]>([])
+
+  const onNavigate = useCallback(async (date: Date, view: CalendarView) => {
+    const data = await getData(view, 5, date)
+    setSelectedDate(date)
+    setEvents(data)
+  }, [])
 
   useEffect(() => {
-    const fetchData = async () => {
-      const data = await getData('twoWeeks', 4)
-      setData(data)
-    }
-
-    fetchData()
-  }, [])
+    onNavigate(selectedDate, view)
+  }, [onNavigate, selectedDate, view])
 
   return (
     <BigCalendar
-      view='twoWeeks'
-      events={data}
-      // maxVisibleEvents={1}
+      selectedDate={selectedDate}
+      view={view}
+      events={events}
       visibleEventCount={3}
       hasCalendarHeader={false}
+      onNavigate={onNavigate}
     />
   )
 }
