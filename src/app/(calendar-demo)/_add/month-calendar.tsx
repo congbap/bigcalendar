@@ -1,55 +1,56 @@
 'use client'
 
 import { Menu } from 'lucide-react'
-import { useCallback, useEffect } from 'react'
+import { useCallback, useEffect, useMemo } from 'react'
 
-import { Button } from '@/components/ui/button'
-
-import { getData } from './data'
 import {
   CalendarProvider,
   CalendarRender,
   useCalendar,
 } from '@/components/calendar'
+import { Button } from '@/components/ui/button'
+
+import { getData } from './data'
 
 function Calendar() {
   const {
     selectedDate,
     view,
-    events,
     setEvents,
-    setCelendarHeader,
+    setCalendarHeader,
     isPending,
     startTransition,
   } = useCalendar()
 
-  useEffect(() => {
-    setCelendarHeader({
-      headerRight: (
-        <Button
-          variant={'ghost'}
-          onClick={() => {
-            navigate(selectedDate)
-          }}
-          disabled={isPending}
-        >
-          <Menu />
-        </Button>
-      ),
-    })
-  }, [selectedDate, isPending])
+  const headerRight = useMemo(
+    () => (
+      <Button variant={'ghost'} onClick={() => {}} disabled={isPending}>
+        <Menu />
+      </Button>
+    ),
+    [isPending],
+  )
 
-  const navigate = useCallback(async (date: Date) => {
-    startTransition(async () => {
-      await new Promise((resolve) => setTimeout(resolve, 300))
-      const data = await getData(view, 10, date)
-      setEvents(data)
+  useEffect(() => {
+    setCalendarHeader({
+      headerRight: headerRight,
     })
-  }, [])
+  }, [setCalendarHeader, headerRight])
+
+  const navigate = useCallback(
+    async (date: Date) => {
+      startTransition(async () => {
+        await new Promise((resolve) => setTimeout(resolve, 300))
+        const data = await getData(view, 10, date)
+        setEvents(data)
+      })
+    },
+    [view, setEvents, startTransition],
+  )
 
   useEffect(() => {
     navigate(selectedDate)
-  }, [selectedDate])
+  }, [selectedDate, navigate])
 
   return <CalendarRender />
 }

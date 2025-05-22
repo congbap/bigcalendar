@@ -31,7 +31,7 @@ type CalendarContextProps = {
   hasCalendarHeader: boolean
   setHasCalendarHeader: Dispatch<SetStateAction<boolean>>
   calendarHeader: CalendarHeaderProps
-  setCelendarHeader: Dispatch<SetStateAction<CalendarHeaderProps>>
+  setCalendarHeader: Dispatch<SetStateAction<CalendarHeaderProps>>
   isPending: boolean
   startTransition: TransitionStartFunction
 }
@@ -66,7 +66,7 @@ export function CalendarProvider({
   const [hasCalendarHeader, setHasCalendarHeader] = useState<boolean>(
     initialHasCalendarHeader,
   )
-  const [calendarHeader, setCelendarHeader] = useState<CalendarHeaderProps>(
+  const [calendarHeader, setCalendarHeader] = useState<CalendarHeaderProps>(
     initialCalendarHeader,
   )
   const [isPending, startTransition] = useTransition()
@@ -138,7 +138,7 @@ export function CalendarProvider({
         hasCalendarHeader,
         setHasCalendarHeader,
         calendarHeader,
-        setCelendarHeader,
+        setCalendarHeader,
         isPending,
         startTransition,
       }}

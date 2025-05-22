@@ -2,28 +2,31 @@
 
 import { useCallback, useEffect } from 'react'
 
-import { getData } from './data'
 import {
   CalendarProvider,
   CalendarRender,
   useCalendar,
 } from '@/components/calendar'
 
-function Calendar() {
-  const { selectedDate, view, setEvents, setCelendarHeader, startTransition } =
-    useCalendar()
+import { getData } from './data'
 
-  const navigate = useCallback(async (date: Date) => {
-    startTransition(async () => {
-      await new Promise((resolve) => setTimeout(resolve, 300))
-      const data = await getData(view, 5, date)
-      setEvents(data)
-    })
-  }, [])
+function Calendar() {
+  const { selectedDate, view, setEvents, startTransition } = useCalendar()
+
+  const navigate = useCallback(
+    async (date: Date) => {
+      startTransition(async () => {
+        await new Promise((resolve) => setTimeout(resolve, 300))
+        const data = await getData(view, 5, date)
+        setEvents(data)
+      })
+    },
+    [view, setEvents, startTransition],
+  )
 
   useEffect(() => {
     navigate(selectedDate)
-  }, [selectedDate])
+  }, [selectedDate, navigate])
 
   return <CalendarRender />
 }
