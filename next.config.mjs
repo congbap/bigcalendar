@@ -4,7 +4,7 @@ const nextConfig = {
   redirects: async () => [
     {
       source: "/",
-      destination: "/big-calendar-demo",
+      destination: "/calendar-demo",
       permanent: false,
     },
   ],
