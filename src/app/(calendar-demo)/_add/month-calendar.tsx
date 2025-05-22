@@ -1,7 +1,7 @@
 'use client'
 
 import { Menu } from 'lucide-react'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect } from 'react'
 
 import { Button } from '@/components/ui/button'
 
@@ -16,49 +16,39 @@ function Calendar() {
   const {
     selectedDate,
     view,
+    events,
     setEvents,
     setCelendarHeader,
-    setOnNavigate,
+    isPending,
     startTransition,
   } = useCalendar()
-
-  const navigate = useCallback(async (date: Date) => {
-    // await new Promise((resolve) => setTimeout(resolve, 1000))
-    const data = await getData(view, 10, date)
-    setEvents(data)
-  }, [])
 
   useEffect(() => {
     setCelendarHeader({
       headerRight: (
-        <Button variant={'ghost'} onClick={() => {}}>
+        <Button
+          variant={'ghost'}
+          onClick={() => {
+            navigate(selectedDate)
+          }}
+          disabled={isPending}
+        >
           <Menu />
         </Button>
       ),
     })
+  }, [selectedDate, isPending])
 
-    // setOnNavigate(() => async (date: Date) => {
-    //   console.log('1')
-    // })
-    // setOnNavigate(() => navigate)
-
-    // navigate(selectedDate)
-    // startTransition(async () => {
-    //   await navigate(selectedDate)
-    // })
-
-    // async function fetchData() {
-    //   const data = await getData(view, 10, selectedDate)
-    //   setEvents(data)
-    // }
-
-    // fetchData()
+  const navigate = useCallback(async (date: Date) => {
+    startTransition(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 300))
+      const data = await getData(view, 10, date)
+      setEvents(data)
+    })
   }, [])
 
   useEffect(() => {
-    startTransition(async () => {
-      await navigate(selectedDate)
-    })
+    navigate(selectedDate)
   }, [selectedDate])
 
   return <CalendarRender />

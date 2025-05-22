@@ -1,5 +1,4 @@
 import { ChevronLeft, ChevronRight } from 'lucide-react'
-import { useTransition } from 'react'
 
 import { Button } from '@/components/ui/button'
 
@@ -12,11 +11,6 @@ type DateNavigatorProps = {
 }
 
 export function DateNavigator({ view }: DateNavigatorProps) {
-  // const { selectedDate, setSelectedDate } = useCalendar()
-
-  // const { selectedDate, setSelectedDate, onNavigate } = useCalendar()
-  // const [loading, startTransition] = useTransition()
-
   const { selectedDate, setSelectedDate, isPending } = useCalendar()
 
   const handlePrevious = () =>
@@ -24,34 +18,6 @@ export function DateNavigator({ view }: DateNavigatorProps) {
 
   const handleNext = () =>
     setSelectedDate(navigateDate(selectedDate, view, 'next'))
-
-  // const handlePrevious = () => {
-  //   startTransition(async () => {
-  //     await setSelectedDate(navigateDate(selectedDate, view, 'previous'))
-  //   })
-  // }
-
-  // const handleNext = () => {
-  //   startTransition(async () => {
-  //     await setSelectedDate(navigateDate(selectedDate, view, 'next'))
-  //   })
-  // }
-
-  // const handlePrevious = () => {
-  //   startTransition(async () => {
-  //     const date = navigateDate(selectedDate, view, 'previous')
-  //     setSelectedDate(date)
-  //     await onNavigate?.call(null, date, view)
-  //   })
-  // }
-
-  // const handleNext = () => {
-  //   startTransition(async () => {
-  //     const date = navigateDate(selectedDate, view, 'next')
-  //     setSelectedDate(date)
-  //     await onNavigate?.call(null, date, view)
-  //   })
-  // }
 
   return (
     <div>

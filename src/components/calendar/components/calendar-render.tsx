@@ -1,3 +1,5 @@
+'use client'
+
 import { useCalendar } from '../contexts/calendar-context'
 import { CalendarHeader } from './header/calendar-header'
 import { CalendarMonthView } from './month-view/calendar-month-view'

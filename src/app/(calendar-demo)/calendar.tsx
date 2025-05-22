@@ -16,7 +16,7 @@ export default function CalendarDemo() {
         <div className='flex flex-col gap-4'>
           <div>TwoWeeks View</div>
           <div>
-            {/* <TwoWeeksCalendar /> */}
+            <TwoWeeksCalendar />
           </div>
         </div>
       </div>

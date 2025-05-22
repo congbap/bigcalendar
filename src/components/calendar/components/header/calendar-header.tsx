@@ -1,5 +1,3 @@
-'use client'
-
 import { useCalendar } from '../../contexts/calendar-context'
 import { DateNavigator } from './date-navigator'
 
