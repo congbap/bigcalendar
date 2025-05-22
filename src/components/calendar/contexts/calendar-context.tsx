@@ -99,7 +99,7 @@ export function CalendarProvider({
       } else if (view === 'twoWeeks') {
         const rangeStart = startOfWeek(selectedDate)
         rangeStart.setHours(0, 0, 0, 0)
-        const rangeEnd = addDays(rangeStart, 14)
+        const rangeEnd = addDays(rangeStart, 13)
         rangeEnd.setHours(23, 59, 59, 999)
         const isInSelectedRange =
           eventStartDate <= rangeEnd && eventEndDate >= rangeStart
