@@ -2,10 +2,7 @@ import { useMemo } from 'react'
 
 import { weekDays } from '../../constants'
 import { useCalendar } from '../../contexts/calendar-context'
-import {
-  calculateTwoWeeksEventPositions,
-  getTwoWeeksCells,
-} from '../../helpers'
+import { calculateMonthEventPositions, getTwoWeeksCells } from '../../helpers'
 import { DayCell } from '../month-view/day-cell'
 
 export function CalendarTwoWeeksView() {
@@ -21,11 +18,12 @@ export function CalendarTwoWeeksView() {
 
   const eventPositions = useMemo(
     () =>
-      calculateTwoWeeksEventPositions(
+      calculateMonthEventPositions(
         multiDayEvents,
         singleDayEvents,
         selectedDate,
         visibleEventCount,
+        'twoWeeks',
       ),
     [multiDayEvents, singleDayEvents, selectedDate, visibleEventCount],
   )

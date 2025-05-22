@@ -23,6 +23,7 @@ export function CalendarMonthView() {
         singleDayEvents,
         selectedDate,
         visibleEventCount,
+        'month',
       ),
     [multiDayEvents, singleDayEvents, selectedDate, visibleEventCount],
   )
