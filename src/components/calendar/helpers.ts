@@ -70,6 +70,82 @@ export function getTwoWeeksCells(selectedDate: Date): CalendarCell[] {
   })
 }
 
+export function calculateTwoWeeksEventPositions(
+  multiDayEvents: CalendarEvent[],
+  singleDayEvents: CalendarEvent[],
+  selectedDate: Date,
+  visibleEventCount: number,
+) {
+  const rangeStart = startOfWeek(selectedDate)
+  rangeStart.setHours(0, 0, 0, 0)
+  const rangeEnd = addDays(rangeStart, 13)
+  rangeEnd.setHours(23, 59, 59, 999)
+
+  const eventPositions: { [key: string]: number } = {}
+  const occupiedPositions: { [key: string]: boolean[] } = {}
+
+  eachDayOfInterval({ start: rangeStart, end: rangeEnd }).forEach((day) => {
+    occupiedPositions[day.toISOString()] = Array.from(
+      { length: visibleEventCount },
+      () => false,
+    )
+  })
+
+  const sortedEvents = [
+    ...multiDayEvents.sort((a, b) => {
+      const aDuration = differenceInDays(
+        parseISO(a.endDate),
+        parseISO(a.startDate),
+      )
+      const bDuration = differenceInDays(
+        parseISO(b.endDate),
+        parseISO(b.startDate),
+      )
+      return (
+        bDuration - aDuration ||
+        parseISO(a.startDate).getTime() - parseISO(b.startDate).getTime()
+      )
+    }),
+    ...singleDayEvents.sort(
+      (a, b) =>
+        parseISO(a.startDate).getTime() - parseISO(b.startDate).getTime(),
+    ),
+  ]
+
+  sortedEvents.forEach((event) => {
+    const eventStart = parseISO(event.startDate)
+    const eventEnd = parseISO(event.endDate)
+    const eventDays = eachDayOfInterval({
+      start: eventStart < rangeStart ? rangeStart : eventStart,
+      end: eventEnd > rangeEnd ? rangeEnd : eventEnd,
+    })
+
+    let position = -1
+
+    for (let i = 0; i < visibleEventCount; i++) {
+      if (
+        eventDays.every((day) => {
+          const dayPositions = occupiedPositions[startOfDay(day).toISOString()]
+          return dayPositions && !dayPositions[i]
+        })
+      ) {
+        position = i
+        break
+      }
+    }
+
+    if (position !== -1) {
+      eventDays.forEach((day) => {
+        const dayKey = startOfDay(day).toISOString()
+        occupiedPositions[dayKey][position] = true
+      })
+      eventPositions[event.id] = position
+    }
+  })
+
+  return eventPositions
+}
+
 // ================ Month view helper functions ================ //
 
 export function getCalendarCells(selectedDate: Date): CalendarCell[] {
