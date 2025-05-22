@@ -1,20 +1,28 @@
 'use client'
 
-import { addDays, isSameDay, parseISO, startOfWeek } from 'date-fns'
 import {
-  createContext,
+  addDays,
+  endOfMonth,
+  endOfWeek,
+  isSameDay,
+  parseISO,
+  startOfMonth,
+  startOfWeek,
+} from 'date-fns'
+import {
   Dispatch,
   SetStateAction,
   TransitionStartFunction,
+  createContext,
   useContext,
   useMemo,
   useState,
   useTransition,
 } from 'react'
 
-import { CalendarEvent, CalendarView } from '../types'
-import { maxVisibleEvent } from '../constants'
 import { CalendarHeaderProps } from '../components/header/calendar-header'
+import { maxVisibleEvent } from '../constants'
+import { CalendarEvent, CalendarView } from '../types'
 
 type CalendarContextProps = {
   selectedDate: Date
@@ -77,25 +85,16 @@ export function CalendarProvider({
       const eventStartDate = parseISO(event.startDate)
       const eventEndDate = parseISO(event.endDate)
 
+      // todo: watching, month, 월에서 캘린더 범위로 수정, 월 범위 외 더 보기로 만 표시, 이벤트로 표시되도록 수정
       if (view === 'month') {
-        const monthStart = new Date(
-          selectedDate.getFullYear(),
-          selectedDate.getMonth(),
-          1,
-        )
-        const monthEnd = new Date(
-          selectedDate.getFullYear(),
-          selectedDate.getMonth() + 1,
-          0,
-          23,
-          59,
-          59,
-          999,
-        )
-        const isInSelectedMonth =
-          eventStartDate <= monthEnd && eventEndDate >= monthStart
+        const rangeStart = startOfWeek(startOfMonth(selectedDate))
+        rangeStart.setHours(0, 0, 0, 0)
+        const rangeEnd = endOfWeek(endOfMonth(selectedDate))
+        rangeEnd.setHours(23, 59, 59, 999)
+        const isInSelectedRange =
+          eventStartDate <= rangeEnd && eventEndDate >= rangeStart
 
-        return isInSelectedMonth
+        return isInSelectedRange
       } else if (view === 'twoWeeks') {
         const rangeStart = startOfWeek(selectedDate)
         rangeStart.setHours(0, 0, 0, 0)
@@ -106,6 +105,35 @@ export function CalendarProvider({
 
         return isInSelectedRange
       }
+      // if (view === 'month') {
+      //   const monthStart = new Date(
+      //     selectedDate.getFullYear(),
+      //     selectedDate.getMonth(),
+      //     1,
+      //   )
+      //   const monthEnd = new Date(
+      //     selectedDate.getFullYear(),
+      //     selectedDate.getMonth() + 1,
+      //     0,
+      //     23,
+      //     59,
+      //     59,
+      //     999,
+      //   )
+      //   const isInSelectedMonth =
+      //     eventStartDate <= monthEnd && eventEndDate >= monthStart
+
+      //   return isInSelectedMonth
+      // } else if (view === 'twoWeeks') {
+      //   const rangeStart = startOfWeek(selectedDate)
+      //   rangeStart.setHours(0, 0, 0, 0)
+      //   const rangeEnd = addDays(rangeStart, 13)
+      //   rangeEnd.setHours(23, 59, 59, 999)
+      //   const isInSelectedRange =
+      //     eventStartDate <= rangeEnd && eventEndDate >= rangeStart
+
+      //   return isInSelectedRange
+      // }
     })
   }, [selectedDate, events, view])
 

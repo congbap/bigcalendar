@@ -5,6 +5,7 @@ import {
   differenceInDays,
   eachDayOfInterval,
   endOfMonth,
+  endOfWeek,
   format,
   isSameDay,
   parseISO,
@@ -119,8 +120,11 @@ export function calculateMonthEventPositions(
   selectedDate: Date,
   visibleEventCount: number,
 ) {
-  const monthStart = startOfMonth(selectedDate)
-  const monthEnd = endOfMonth(selectedDate)
+  // todo: watching, month, 월에서 캘린더 범위로 수정, 월 범위 외 더 보기로 만 표시, 이벤트로 표시되도록 수정
+  const monthStart = startOfWeek(startOfMonth(selectedDate))
+  const monthEnd = endOfWeek(endOfMonth(selectedDate))
+  // const monthStart = startOfMonth(selectedDate)
+  // const monthEnd = endOfMonth(selectedDate)
 
   const eventPositions: { [key: string]: number } = {}
   const occupiedPositions: { [key: string]: boolean[] } = {}
