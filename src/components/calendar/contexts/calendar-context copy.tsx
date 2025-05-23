@@ -31,7 +31,6 @@ type CalendarContextProps = {
   setView: Dispatch<SetStateAction<CalendarView>>
   events: CalendarEvent[]
   setEvents: Dispatch<SetStateAction<CalendarEvent[]>>
-  rangedEvents: CalendarEvent[]
   filteredEvents: CalendarEvent[]
   singleDayEvents: CalendarEvent[]
   multiDayEvents: CalendarEvent[]
@@ -81,13 +80,14 @@ export function CalendarProvider({
   const [isPending, startTransition] = useTransition()
 
   // todo: extend
-  // todo: watching, 월에서 캘린더 범위로 수정, 월 범위 외 더 보기로 만 표시, 이벤트로 표시되도록 수정
-  // todo: watching, 이벤트 숨김 처리, 필터를 범위와 분리
-  const rangedEvents = useMemo(() => {
+  const filteredEvents = useMemo(() => {
     return events.filter((event) => {
+      if (event.isHide) return false
+
       const eventStartDate = parseISO(event.startDate)
       const eventEndDate = parseISO(event.endDate)
 
+      // todo: watching, month, 월에서 캘린더 범위로 수정, 월 범위 외 더 보기로 만 표시, 이벤트로 표시되도록 수정
       if (view === 'month') {
         const rangeStart = startOfWeek(startOfMonth(selectedDate))
         rangeStart.setHours(0, 0, 0, 0)
@@ -107,70 +107,37 @@ export function CalendarProvider({
 
         return isInSelectedRange
       }
+      // if (view === 'month') {
+      //   const monthStart = new Date(
+      //     selectedDate.getFullYear(),
+      //     selectedDate.getMonth(),
+      //     1,
+      //   )
+      //   const monthEnd = new Date(
+      //     selectedDate.getFullYear(),
+      //     selectedDate.getMonth() + 1,
+      //     0,
+      //     23,
+      //     59,
+      //     59,
+      //     999,
+      //   )
+      //   const isInSelectedMonth =
+      //     eventStartDate <= monthEnd && eventEndDate >= monthStart
+
+      //   return isInSelectedMonth
+      // } else if (view === 'twoWeeks') {
+      //   const rangeStart = startOfWeek(selectedDate)
+      //   rangeStart.setHours(0, 0, 0, 0)
+      //   const rangeEnd = addDays(rangeStart, 13)
+      //   rangeEnd.setHours(23, 59, 59, 999)
+      //   const isInSelectedRange =
+      //     eventStartDate <= rangeEnd && eventEndDate >= rangeStart
+
+      //   return isInSelectedRange
+      // }
     })
   }, [selectedDate, events, view])
-
-  const filteredEvents = rangedEvents.filter((event) => {
-    if (!event.isHide) return true
-  })
-  // const filteredEvents = useMemo(() => {
-  //   return events.filter((event) => {
-  //     if (event.isHide) return false
-
-  //     const eventStartDate = parseISO(event.startDate)
-  //     const eventEndDate = parseISO(event.endDate)
-
-  //     // todo: watching, month, 월에서 캘린더 범위로 수정, 월 범위 외 더 보기로 만 표시, 이벤트로 표시되도록 수정
-  //     if (view === 'month') {
-  //       const rangeStart = startOfWeek(startOfMonth(selectedDate))
-  //       rangeStart.setHours(0, 0, 0, 0)
-  //       const rangeEnd = endOfWeek(endOfMonth(selectedDate))
-  //       rangeEnd.setHours(23, 59, 59, 999)
-  //       const isInSelectedRange =
-  //         eventStartDate <= rangeEnd && eventEndDate >= rangeStart
-
-  //       return isInSelectedRange
-  //     } else if (view === 'twoWeeks') {
-  //       const rangeStart = startOfWeek(selectedDate)
-  //       rangeStart.setHours(0, 0, 0, 0)
-  //       const rangeEnd = addDays(rangeStart, 13)
-  //       rangeEnd.setHours(23, 59, 59, 999)
-  //       const isInSelectedRange =
-  //         eventStartDate <= rangeEnd && eventEndDate >= rangeStart
-
-  //       return isInSelectedRange
-  //     }
-  //     // if (view === 'month') {
-  //     //   const monthStart = new Date(
-  //     //     selectedDate.getFullYear(),
-  //     //     selectedDate.getMonth(),
-  //     //     1,
-  //     //   )
-  //     //   const monthEnd = new Date(
-  //     //     selectedDate.getFullYear(),
-  //     //     selectedDate.getMonth() + 1,
-  //     //     0,
-  //     //     23,
-  //     //     59,
-  //     //     59,
-  //     //     999,
-  //     //   )
-  //     //   const isInSelectedMonth =
-  //     //     eventStartDate <= monthEnd && eventEndDate >= monthStart
-
-  //     //   return isInSelectedMonth
-  //     // } else if (view === 'twoWeeks') {
-  //     //   const rangeStart = startOfWeek(selectedDate)
-  //     //   rangeStart.setHours(0, 0, 0, 0)
-  //     //   const rangeEnd = addDays(rangeStart, 13)
-  //     //   rangeEnd.setHours(23, 59, 59, 999)
-  //     //   const isInSelectedRange =
-  //     //     eventStartDate <= rangeEnd && eventEndDate >= rangeStart
-
-  //     //   return isInSelectedRange
-  //     // }
-  //   })
-  // }, [selectedDate, events, view])
 
   const singleDayEvents = filteredEvents.filter((event) => {
     const startDate = parseISO(event.startDate)
@@ -193,7 +160,6 @@ export function CalendarProvider({
         setView,
         events,
         setEvents,
-        rangedEvents,
         filteredEvents,
         singleDayEvents,
         multiDayEvents,

@@ -1,6 +1,6 @@
 'use client'
 
-import { ListFilter, Menu } from 'lucide-react'
+import { Menu } from 'lucide-react'
 import { useCallback, useEffect, useMemo } from 'react'
 
 import {
@@ -17,11 +17,23 @@ function Calendar() {
     selectedDate,
     view,
     setEvents,
-    filteredEvents,
+    rangedEvents,
     setCalendarHeader,
     isPending,
     startTransition,
   } = useCalendar()
+
+  // example, hide random event toggle
+  const toggleRandomEvent = useCallback(() => {
+    const target = rangedEvents[Math.floor(Math.random() * rangedEvents.length)]
+    if (target) {
+      setEvents((prevEvents) =>
+        prevEvents.map((event) =>
+          event.id === target.id ? { ...event, isHide: !event.isHide } : event,
+        ),
+      )
+    }
+  }, [setEvents, rangedEvents])
 
   const headerRight = useMemo(
     () => (
@@ -29,22 +41,7 @@ function Calendar() {
         <div className='space-x-2'>
           <Button
             variant={'ghost'}
-            onClick={() => {
-              // example, hide random event toggle
-              const target =
-                filteredEvents[
-                  Math.floor(Math.random() * filteredEvents.length)
-                ]
-              if (target) {
-                setEvents((prevEvents) =>
-                  prevEvents.map((event) =>
-                    event.id === target.id
-                      ? { ...event, isHide: !event.isHide }
-                      : event,
-                  ),
-                )
-              }
-            }}
+            onClick={toggleRandomEvent}
             disabled={isPending}
           >
             <Menu />
@@ -52,7 +49,7 @@ function Calendar() {
         </div>
       </div>
     ),
-    [isPending],
+    [isPending, toggleRandomEvent],
   )
 
   useEffect(() => {
@@ -81,7 +78,7 @@ function Calendar() {
 
 export default function MonthCalendar() {
   return (
-    <CalendarProvider initialVisibleEventCount={3}>
+    <CalendarProvider>
       <Calendar />
     </CalendarProvider>
   )
