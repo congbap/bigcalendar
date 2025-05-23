@@ -82,6 +82,8 @@ export function CalendarProvider({
   // todo: extend
   const filteredEvents = useMemo(() => {
     return events.filter((event) => {
+      if (event.isHide) return false
+
       const eventStartDate = parseISO(event.startDate)
       const eventEndDate = parseISO(event.endDate)
 

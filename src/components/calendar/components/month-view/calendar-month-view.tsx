@@ -8,7 +8,7 @@ import { DayCell } from './day-cell'
 export function CalendarMonthView() {
   const {
     selectedDate,
-    events,
+    filteredEvents,
     singleDayEvents,
     multiDayEvents,
     visibleEventCount,
@@ -45,7 +45,7 @@ export function CalendarMonthView() {
           <DayCell
             key={cell.date.toISOString()}
             cell={cell}
-            events={events}
+            events={filteredEvents}
             eventPositions={eventPositions}
             visibleEventCount={visibleEventCount}
           />

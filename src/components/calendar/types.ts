@@ -42,4 +42,5 @@ export type CalendarEvent = {
   endDate: string
   title: string
   color: EventColor
+  isHide?: boolean
 }

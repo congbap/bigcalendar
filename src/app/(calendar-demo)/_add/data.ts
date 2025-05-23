@@ -4,7 +4,7 @@ import {
   CalendarEvent,
   CalendarView,
   eventColors,
-} from '@/components/big-calendar/types'
+} from '@/components/calendar/types'
 // import { tsid } from '@/lib/utils'
 
 const companys = [
@@ -66,94 +66,96 @@ export const getData = async (
     })
   }
 
-  // todo: test
-  // todo: fixing, 일정 표시 빠른 일정 순으로
-  events.splice(0, events.length)
+  // // todo: test
+  // // todo: fixing, 일정 표시 빠른 일정 순으로
+  // events.splice(0, events.length)
 
-  events.push({
-    id: tsid(),
-    startDate: now.toISOString(),
-    endDate: addDays(now, 7).toISOString(),
-    title:
-      `E${format(now, 'yyMM')}-${Math.floor(Math.random() * (9 - 1) + 1)
-        .toString()
-        .padStart(3, '0')}${Math.floor(Math.random() * 2) > 0 ? '+1' : ''}` +
-      `/${companys[Math.floor(Math.random() * companys.length)]}` +
-      `/${usernames[Math.floor(Math.random() * usernames.length)]}` +
-      `/V${Math.floor(Math.random() * 5)}`,
-    color: eventColors[Math.floor(Math.random() * eventColors.length)],
-  })
-  events.push({
-    id: tsid(),
-    startDate: now.toISOString(),
-    endDate: addDays(now, 7).toISOString(),
-    title:
-      `E${format(now, 'yyMM')}-${Math.floor(Math.random() * (9 - 1) + 1)
-        .toString()
-        .padStart(3, '0')}${Math.floor(Math.random() * 2) > 0 ? '+1' : ''}` +
-      `/${companys[Math.floor(Math.random() * companys.length)]}` +
-      `/${usernames[Math.floor(Math.random() * usernames.length)]}` +
-      `/V${Math.floor(Math.random() * 5)}`,
-    color: eventColors[Math.floor(Math.random() * eventColors.length)],
-  })
+  // events.push({
+  //   id: tsid(),
+  //   startDate: now.toISOString(),
+  //   endDate: addDays(now, 7).toISOString(),
+  //   title:
+  //     `E${format(now, 'yyMM')}-${Math.floor(Math.random() * (9 - 1) + 1)
+  //       .toString()
+  //       .padStart(3, '0')}${Math.floor(Math.random() * 2) > 0 ? '+1' : ''}` +
+  //     `/${companys[Math.floor(Math.random() * companys.length)]}` +
+  //     `/${usernames[Math.floor(Math.random() * usernames.length)]}` +
+  //     `/V${Math.floor(Math.random() * 5)}`,
+  //   color: eventColors[Math.floor(Math.random() * eventColors.length)],
+  // })
 
-  events.push({
-    id: tsid(),
-    startDate: now.toISOString(),
-    endDate: addDays(now, 10).toISOString(),
-    title:
-      `E${format(now, 'yyMM')}-${Math.floor(Math.random() * (9 - 1) + 1)
-        .toString()
-        .padStart(3, '0')}${Math.floor(Math.random() * 2) > 0 ? '+1' : ''}` +
-      `/${companys[Math.floor(Math.random() * companys.length)]}` +
-      `/${usernames[Math.floor(Math.random() * usernames.length)]}` +
-      `/V${Math.floor(Math.random() * 5)}`,
-    color: eventColors[Math.floor(Math.random() * eventColors.length)],
-  })
+  // // events.push({
+  // //   id: tsid(),
+  // //   startDate: now.toISOString(),
+  // //   endDate: addDays(now, 7).toISOString(),
+  // //   title:
+  // //     `E${format(now, 'yyMM')}-${Math.floor(Math.random() * (9 - 1) + 1)
+  // //       .toString()
+  // //       .padStart(3, '0')}${Math.floor(Math.random() * 2) > 0 ? '+1' : ''}` +
+  // //     `/${companys[Math.floor(Math.random() * companys.length)]}` +
+  // //     `/${usernames[Math.floor(Math.random() * usernames.length)]}` +
+  // //     `/V${Math.floor(Math.random() * 5)}`,
+  // //   color: eventColors[Math.floor(Math.random() * eventColors.length)],
+  // // })
 
-  events.push({
-    id: tsid(),
-    startDate: addDays(now, -5).toISOString(),
-    endDate: addDays(now, 2).toISOString(),
-    title:
-      `E${format(now, 'yyMM')}-${Math.floor(Math.random() * (9 - 1) + 1)
-        .toString()
-        .padStart(3, '0')}${Math.floor(Math.random() * 2) > 0 ? '+1' : ''}` +
-      `/${companys[Math.floor(Math.random() * companys.length)]}` +
-      `/${usernames[Math.floor(Math.random() * usernames.length)]}` +
-      `/V${Math.floor(Math.random() * 5)}`,
-    color: eventColors[Math.floor(Math.random() * eventColors.length)],
-  })
+  // // events.push({
+  // //   id: tsid(),
+  // //   startDate: now.toISOString(),
+  // //   endDate: addDays(now, 10).toISOString(),
+  // //   title:
+  // //     `E${format(now, 'yyMM')}-${Math.floor(Math.random() * (9 - 1) + 1)
+  // //       .toString()
+  // //       .padStart(3, '0')}${Math.floor(Math.random() * 2) > 0 ? '+1' : ''}` +
+  // //     `/${companys[Math.floor(Math.random() * companys.length)]}` +
+  // //     `/${usernames[Math.floor(Math.random() * usernames.length)]}` +
+  // //     `/V${Math.floor(Math.random() * 5)}`,
+  // //   color: eventColors[Math.floor(Math.random() * eventColors.length)],
+  // // })
 
-  for (let i = 0; i < 6; i++) {
-    events.push({
-      id: tsid(),
-      startDate: addDays(now, -14).toISOString(),
-      endDate: addDays(now, -14).toISOString(),
-      title:
-        `E${format(now, 'yyMM')}-${Math.floor(Math.random() * (9 - 1) + 1)
-          .toString()
-          .padStart(3, '0')}${Math.floor(Math.random() * 2) > 0 ? '+1' : ''}` +
-        `/${companys[Math.floor(Math.random() * companys.length)]}` +
-        `/${usernames[Math.floor(Math.random() * usernames.length)]}` +
-        `/V${Math.floor(Math.random() * 5)}`,
-      color: eventColors[Math.floor(Math.random() * eventColors.length)],
-    })
-  }
+  // // events.push({
+  // //   id: tsid(),
+  // //   startDate: addDays(now, -5).toISOString(),
+  // //   endDate: addDays(now, 2).toISOString(),
+  // //   title:
+  // //     `E${format(now, 'yyMM')}-${Math.floor(Math.random() * (9 - 1) + 1)
+  // //       .toString()
+  // //       .padStart(3, '0')}${Math.floor(Math.random() * 2) > 0 ? '+1' : ''}` +
+  // //     `/${companys[Math.floor(Math.random() * companys.length)]}` +
+  // //     `/${usernames[Math.floor(Math.random() * usernames.length)]}` +
+  // //     `/V${Math.floor(Math.random() * 5)}`,
+  // //   color: eventColors[Math.floor(Math.random() * eventColors.length)],
+  // // })
 
-  events.push({
-    id: tsid(),
-    startDate: addDays(now, 7).toISOString(),
-    endDate: addDays(now, 7).toISOString(),
-    title:
-      `E${format(now, 'yyMM')}-${Math.floor(Math.random() * (9 - 1) + 1)
-        .toString()
-        .padStart(3, '0')}${Math.floor(Math.random() * 2) > 0 ? '+1' : ''}` +
-      `/${companys[Math.floor(Math.random() * companys.length)]}` +
-      `/${usernames[Math.floor(Math.random() * usernames.length)]}` +
-      `/V${Math.floor(Math.random() * 5)}`,
-    color: eventColors[Math.floor(Math.random() * eventColors.length)],
-  })
+  // // for (let i = 0; i < 10; i++) {
+  // //   events.push({
+  // //     id: tsid(),
+  // //     startDate: addDays(now, -14).toISOString(),
+  // //     endDate: addDays(now, -14).toISOString(),
+  // //     title:
+  // //       `E${format(now, 'yyMM')}-${Math.floor(Math.random() * (9 - 1) + 1)
+  // //         .toString()
+  // //         .padStart(3, '0')}${Math.floor(Math.random() * 2) > 0 ? '+1' : ''}` +
+  // //       `/${companys[Math.floor(Math.random() * companys.length)]}` +
+  // //       `/${usernames[Math.floor(Math.random() * usernames.length)]}` +
+  // //       `/V${Math.floor(Math.random() * 5)}`,
+  // //     color: eventColors[Math.floor(Math.random() * eventColors.length)],
+  // //     isHide: Math.random() < 0.5 ? true : false,
+  // //   })
+  // // }
+
+  // // events.push({
+  // //   id: tsid(),
+  // //   startDate: addDays(now, 7).toISOString(),
+  // //   endDate: addDays(now, 7).toISOString(),
+  // //   title:
+  // //     `E${format(now, 'yyMM')}-${Math.floor(Math.random() * (9 - 1) + 1)
+  // //       .toString()
+  // //       .padStart(3, '0')}${Math.floor(Math.random() * 2) > 0 ? '+1' : ''}` +
+  // //     `/${companys[Math.floor(Math.random() * companys.length)]}` +
+  // //     `/${usernames[Math.floor(Math.random() * usernames.length)]}` +
+  // //     `/V${Math.floor(Math.random() * 5)}`,
+  // //   color: eventColors[Math.floor(Math.random() * eventColors.length)],
+  // // })
 
   return events
 }
